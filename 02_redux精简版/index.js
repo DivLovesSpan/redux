@@ -10,7 +10,7 @@ root.render(
   </React.StrictMode>
 );
 
-// 页面刷新。
+// 监测 redux 中状态的改变，如果 redux 的状态发生了改变，那么重新渲染 App 组件。
 store.subscribe(() => {
   root.render(
     <React.StrictMode>

@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { Select, Button } from "antd";
-import { increment, decrement, incrementAsync } from "../../redux/action_creators";
 import "./index.css";
 
 export default class Count extends Component {
-  store = this.props.store;
-  
   state = {
     selected: 1
   };
@@ -16,18 +13,24 @@ export default class Count extends Component {
     })
   }
 
-  increase() {
-    const { selected } = this.state;
-    this.store.dispatch(increment(selected * 1));
-  }
-  
-  decrease() {
-    const { selected } = this.state;
-    this.store.dispatch(decrement(selected * 1));
+  componentDidMount() {
+    console.log(this.props.increment);
+    console.log(this.props.decrement);
+    console.log(this.props.incrementAsync);
   }
 
-  increaseIfOdd() {
-    const count = this.store.getState();
+  increase() {
+    const { selected } = this.state;
+    this.props.increment(selected * 1 );
+  }
+
+  decrease() {
+    const { selected } = this.state;
+    this.props.decrement(selected * 1 );
+  }
+
+  increaseIfOdd()  {
+    const { count } = this.props;
     if (count % 2 === 1) {
       this.increase();
     }
@@ -35,11 +38,11 @@ export default class Count extends Component {
 
   increaseAsync() {
     const { selected } = this.state;
-    this.store.dispatch(incrementAsync(selected, 1000))
+    this.props.incrementAsync(selected * 1, 1000);
   }
   
   render() {
-    const count = this.store.getState();
+    const count = this.props.count;
     const { Option } = Select;
     return (
       <div className="count">
